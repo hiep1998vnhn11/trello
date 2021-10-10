@@ -1,11 +1,16 @@
 <template>
   <div class="dropdown">
-    <div class="dropdown-item">
-      <click-out-side @clickOutside="onClickOutSide">
+    <click-out-side @clickOutside="onClickOutSide">
+      <div class="dropdown-item">
         <div class="dropdown-item__select" @click="onClickOpen">
-          <slot name="toggle">
-            <button>Toggle</button>
-          </slot>
+          <i class="icon ic-search search"></i>
+          <input />
+          <i v-show="active" class="icon ic-share share"></i>
+          <i
+            v-show="active"
+            class="icon ic-close close"
+            @click="onClickClose"
+          ></i>
         </div>
         <div
           class="dropdown-item__content bottom"
@@ -13,40 +18,38 @@
             active,
           }"
         >
-          <slot></slot>
+          123
         </div>
-      </click-out-side>
-    </div>
+      </div>
+    </click-out-side>
   </div>
 </template>
 <script lang="ts">
-import { dropdownItemProp } from './type'
 import { ref, defineComponent, computed } from 'vue'
 import ClickOutSide from '/@/components/ClickOutSide.vue'
 export default defineComponent({
-  name: 'Dropdown',
-  props: dropdownItemProp,
+  name: 'SearchInput',
   components: {
     ClickOutSide,
   },
   setup(props) {
-    const { position, width } = props
     const active = ref<boolean>(false)
-    const widthComputed = computed(() =>
-      typeof width === 'number' ? width + 'px' : width
-    )
     const onClickOutSide = () => {
       active.value = false
     }
     const onClickOpen = () => {
-      active.value = !active.value
+      active.value = true
+    }
+    const onClickClose = (e: any) => {
+      e.preventDefault()
+
+      active.value = false
     }
     return {
-      position,
-      width: widthComputed,
       onClickOutSide,
       onClickOpen,
       active,
+      onClickClose,
     }
   },
 })
@@ -54,6 +57,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .dropdown {
   display: flex;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+
   .dropdown-item {
     position: relative;
     display: block;
@@ -62,6 +68,32 @@ export default defineComponent({
     }
     &__select {
       cursor: pointer;
+      width: 300px;
+      height: 35px;
+      position: relative;
+      .icon {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .search {
+        left: 10px;
+      }
+      .share {
+        right: 30px;
+      }
+      .close {
+        right: 10px;
+      }
+      input {
+        width: 100%;
+        height: 100%;
+        padding-left: 30px;
+        padding-right: 50px;
+        &:focus-visible {
+          outline: none;
+        }
+      }
     }
 
     &__content {
@@ -82,13 +114,13 @@ export default defineComponent({
         top: 1rem;
       }
       &.active {
-        display: block;
         opacity: 1;
+        display: block;
         transform: translateY(-10px);
       }
-      display: none;
-      position: absolute;
       opacity: 0;
+      position: absolute;
+      display: none;
       transform: translateY(-20px);
       transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
       box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);

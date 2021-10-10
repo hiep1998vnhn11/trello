@@ -1,9 +1,8 @@
-<template>
-  <div>12312321312312312312</div>
-</template>
+<template>b-index</template>
 <script lang="ts">
 import { onMounted, ref, defineComponent } from 'vue'
 export default defineComponent({
+  name: 'TrelloBIndex',
   setup() {
     onMounted(() => {})
     return {}
