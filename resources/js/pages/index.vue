@@ -1,7 +1,7 @@
 <template>
     <div class="flex">
         <div class="container">
-            <div>123</div>
+            <div class="w-full mt-1">123</div>
             123
             <div class="arrow-up"></div>
             <div class="arrow-down"></div>
@@ -44,9 +44,10 @@ export default defineComponent({
 .arrow-right {
     width: 0;
     height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
     border-left: 160px solid green;
+    transform: rotate(90deg);
 }
 
 .arrow-left {

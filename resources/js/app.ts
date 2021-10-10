@@ -4,6 +4,7 @@ import { createApp } from 'vue'
 import { setupStore } from './store'
 import { setupPlugin } from './plugins'
 import './assets/scss/app.scss'
+import './index.css'
 
 function bootstrap() {
     const app = createApp(App)
