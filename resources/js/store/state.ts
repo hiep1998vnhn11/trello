@@ -1,8 +1,10 @@
 export type AppState = {
-    darkMode: boolean
-    appButton: boolean
+  darkMode: boolean
+  appButton: boolean
+  sidebar: boolean
 }
 export default {
-    darkMode: localStorage.getItem('DARK_MODE') === 'true',
-    appButton: false,
+  darkMode: localStorage.getItem('DARK_MODE') === 'true',
+  appButton: false,
+  sidebar: true,
 } as AppState

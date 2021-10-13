@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse } from 'axios'
-import type { RequestOptions, Result, UploadFileParams } from '/#/types/axios'
+import type { RequestOptions, Result, UploadFileParams } from '/#/axios'
 import type { CreateAxiosOptions } from './axiosTransform'
 import axios from 'axios'
 import qs from 'qs'
@@ -77,28 +77,34 @@ export class VAxios {
     const axiosCanceler = new AxiosCanceler()
 
     // Request interceptor configuration processing
-    this.axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
-      // If cancel repeat request is turned on, then cancel repeat request is prohibited
-      const {
-        headers: { ignoreCancelToken },
-      } = config
+    this.axiosInstance.interceptors.request.use(
+      (config: AxiosRequestConfig) => {
+        // If cancel repeat request is turned on, then cancel repeat request is prohibited
+        const {
+          headers: { ignoreCancelToken },
+        } = config
 
-      const ignoreCancel =
-        ignoreCancelToken !== undefined
-          ? ignoreCancelToken
-          : this.options.requestOptions?.ignoreCancelToken
+        const ignoreCancel =
+          ignoreCancelToken !== undefined
+            ? ignoreCancelToken
+            : this.options.requestOptions?.ignoreCancelToken
 
-      !ignoreCancel && axiosCanceler.addPending(config)
-      if (requestInterceptors && isFunction(requestInterceptors)) {
-        config = requestInterceptors(config, this.options)
-      }
-      return config
-    }, undefined)
+        !ignoreCancel && axiosCanceler.addPending(config)
+        if (requestInterceptors && isFunction(requestInterceptors)) {
+          config = requestInterceptors(config, this.options)
+        }
+        return config
+      },
+      undefined
+    )
 
     // Request interceptor error capture
     requestInterceptorsCatch &&
       isFunction(requestInterceptorsCatch) &&
-      this.axiosInstance.interceptors.request.use(undefined, requestInterceptorsCatch)
+      this.axiosInstance.interceptors.request.use(
+        undefined,
+        requestInterceptorsCatch
+      )
 
     // Response result interceptor processing
     this.axiosInstance.interceptors.response.use((res: AxiosResponse<any>) => {
@@ -112,7 +118,10 @@ export class VAxios {
     // Response result interceptor error capture
     responseInterceptorsCatch &&
       isFunction(responseInterceptorsCatch) &&
-      this.axiosInstance.interceptors.response.use(undefined, responseInterceptorsCatch)
+      this.axiosInstance.interceptors.response.use(
+        undefined,
+        responseInterceptorsCatch
+      )
   }
 
   /**
@@ -172,23 +181,38 @@ export class VAxios {
     }
   }
 
-  get<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+  get<T = any>(
+    config: AxiosRequestConfig,
+    options?: RequestOptions
+  ): Promise<T> {
     return this.request({ ...config, method: 'GET' }, options)
   }
 
-  post<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+  post<T = any>(
+    config: AxiosRequestConfig,
+    options?: RequestOptions
+  ): Promise<T> {
     return this.request({ ...config, method: 'POST' }, options)
   }
 
-  put<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+  put<T = any>(
+    config: AxiosRequestConfig,
+    options?: RequestOptions
+  ): Promise<T> {
     return this.request({ ...config, method: 'PUT' }, options)
   }
 
-  delete<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+  delete<T = any>(
+    config: AxiosRequestConfig,
+    options?: RequestOptions
+  ): Promise<T> {
     return this.request({ ...config, method: 'DELETE' }, options)
   }
 
-  request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+  request<T = any>(
+    config: AxiosRequestConfig,
+    options?: RequestOptions
+  ): Promise<T> {
     let conf: CreateAxiosOptions = cloneDeep(config)
     const transform = this.getTransform()
 
@@ -196,7 +220,8 @@ export class VAxios {
 
     const opt: RequestOptions = Object.assign({}, requestOptions, options)
 
-    const { beforeRequestHook, requestCatchHook, transformRequestHook } = transform || {}
+    const { beforeRequestHook, requestCatchHook, transformRequestHook } =
+      transform || {}
     if (beforeRequestHook && isFunction(beforeRequestHook)) {
       conf = beforeRequestHook(conf, opt)
     }

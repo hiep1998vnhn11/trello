@@ -1,9 +1,9 @@
 import type { Router } from 'vue-router'
 import { createAuthGuard } from './auth'
 export function createRouteGuard(router: Router) {
-    createAuthGuard(router)
+  createAuthGuard(router)
 
-    router.beforeResolve((to, from) => {})
+  router.beforeResolve((to, from) => {})
 
-    router.beforeEach((to, from) => {})
+  router.beforeEach((to, from) => {})
 }

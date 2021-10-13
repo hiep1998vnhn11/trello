@@ -1,10 +1,10 @@
 <template>
-  <div class="dropdown">
+  <div class="search-input">
     <click-out-side @clickOutside="onClickOutSide">
-      <div class="dropdown-item">
-        <div class="dropdown-item__select" @click="onClickOpen">
+      <div class="search-input-item">
+        <div class="search-input-item__select" @click="onClickOpen">
           <i class="icon ic-search search"></i>
-          <input />
+          <input v-model="input" placeholder="Tìm kiếm ..." />
           <i v-show="active" class="icon ic-share share"></i>
           <i
             v-show="active"
@@ -13,12 +13,17 @@
           ></i>
         </div>
         <div
-          class="dropdown-item__content bottom"
+          class="search-input-item__content bottom"
           :class="{
             active,
           }"
         >
-          123
+          <div class="search-input-item__content__title">
+            Gửi phản hồi cho chúng tôi asd
+          </div>
+          <div class="search-input-item__content__footer">
+            Gửi phản hồi cho chúng tôi
+          </div>
         </div>
       </div>
     </click-out-side>
@@ -34,6 +39,7 @@ export default defineComponent({
   },
   setup(props) {
     const active = ref<boolean>(false)
+    const input = ref('')
     const onClickOutSide = () => {
       active.value = false
     }
@@ -50,22 +56,20 @@ export default defineComponent({
       onClickOpen,
       active,
       onClickClose,
+      input,
     }
   },
 })
 </script>
 <style lang="scss" scoped>
-.dropdown {
+.search-input {
   display: flex;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 
-  .dropdown-item {
+  &-item {
     position: relative;
     display: block;
-    &:hover {
-      cursor: pointer;
-    }
     &__select {
       cursor: pointer;
       width: 300px;
@@ -90,35 +94,24 @@ export default defineComponent({
         height: 100%;
         padding-left: 30px;
         padding-right: 50px;
+        background: rgba(255, 255, 255, 0.1);
         &:focus-visible {
           outline: none;
+          background: #fff;
         }
       }
     }
 
     &__content {
-      &.bottom {
-        top: calc(100% + 1rem);
-        left: 0;
-      }
-      &.left {
-        right: calc(100% + 1rem);
-        top: 0;
-      }
-      &.top {
-        bottom: calc(100% + 1rem);
-        left: 0;
-      }
-      &.right {
-        left: calc(100% + 0.5rem);
-        top: 1rem;
-      }
       &.active {
         opacity: 1;
         display: block;
         transform: translateY(-10px);
       }
+      top: calc(100% + 1rem);
+      left: -100px;
       opacity: 0;
+      width: 500px;
       position: absolute;
       display: none;
       transform: translateY(-20px);
@@ -129,6 +122,13 @@ export default defineComponent({
       background: white;
       z-index: 2222;
       min-width: 150px;
+      &__title {
+        display: flex;
+        justify-content: center;
+      }
+      &__footer {
+        border-top: solid 1px rgba(0, 0, 0, 0.1);
+      }
     }
   }
 }

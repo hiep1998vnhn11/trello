@@ -14,7 +14,10 @@ import { joinTimestamp, formatRequestDate } from './helper'
 const globSetting = useGlobSetting()
 const urlPrefix = globSetting.urlPrefix
 const transform: AxiosTransform = {
-  transformRequestHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
+  transformRequestHook: (
+    res: AxiosResponse<Result>,
+    options: RequestOptions
+  ) => {
     const { isTransformResponse, isReturnNativeResponse } = options
     if (isReturnNativeResponse) {
       return res
@@ -27,7 +30,8 @@ const transform: AxiosTransform = {
       throw new Error('sys.api.apiRequestFailed')
     }
     const { code, result, message } = data
-    const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS
+    const hasSuccess =
+      data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS
     if (hasSuccess) {
       return result
     }
@@ -50,7 +54,13 @@ const transform: AxiosTransform = {
     throw new Error(timeoutMsg || 'sys.api.apiRequestFailed')
   },
   beforeRequestHook: (config, options) => {
-    const { apiUrl, joinPrefix, joinParamsToUrl, formatDate, joinTime = true } = options
+    const {
+      apiUrl,
+      joinPrefix,
+      joinParamsToUrl,
+      formatDate,
+      joinTime = true,
+    } = options
 
     if (joinPrefix) {
       config.url = `${urlPrefix}${config.url}`
@@ -64,7 +74,10 @@ const transform: AxiosTransform = {
     formatDate && data && !isString(data) && formatRequestDate(data)
     if (config.method?.toUpperCase() === RequestEnum.GET) {
       if (!isString(params)) {
-        config.params = Object.assign(params || {}, joinTimestamp(joinTime, false))
+        config.params = Object.assign(
+          params || {},
+          joinTimestamp(joinTime, false)
+        )
       } else {
         config.url = config.url + params + `${joinTimestamp(joinTime, true)}`
         config.params = undefined
@@ -72,7 +85,11 @@ const transform: AxiosTransform = {
     } else {
       if (!isString(params)) {
         formatDate && formatRequestDate(params)
-        if (Reflect.has(config, 'data') && config.data && Object.keys(config.data).length > 0) {
+        if (
+          Reflect.has(config, 'data') &&
+          config.data &&
+          Object.keys(config.data).length > 0
+        ) {
           config.data = data
           config.params = params
         } else {

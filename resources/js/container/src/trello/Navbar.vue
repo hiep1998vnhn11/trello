@@ -116,10 +116,7 @@
 
       <Dropdown>
         <template #toggle>
-          <button class="btn">
-            Tạo mới
-            <i class="icon ic-down ml-2"></i>
-          </button>
+          <button class="btn">Tạo mới</button>
         </template>
         <div class="workspace-card">
           <div class="workspace-card__title">
@@ -212,6 +209,9 @@ export default defineComponent({
   &__gohome {
     margin: 0 10px 0 6px;
     height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &__icon {
     width: 75px;

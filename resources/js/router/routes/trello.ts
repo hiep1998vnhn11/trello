@@ -10,11 +10,23 @@ export default [
         path: '',
         name: 'TrelloIndex',
         component: () => import('/@/pages/trello/index.vue'),
-      },
-      {
-        path: 'boards',
-        name: 'TrelloBoards',
-        component: () => import('/@/pages/trello/index.vue'),
+        children: [
+          {
+            path: 'boards',
+            name: 'TrelloBoards',
+            component: () => import('/@/pages/trello/index/boards.vue'),
+          },
+          {
+            path: 'templates',
+            name: 'TrelloTemplates',
+            component: () => import('/@/pages/trello/index/templates.vue'),
+          },
+          {
+            path: 'templates/:url',
+            name: 'TrelloTemplatesUrl',
+            component: () => import('/@/pages/trello/index/templates/url.vue'),
+          },
+        ],
       },
       {
         path: 'b',
