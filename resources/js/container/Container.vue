@@ -12,6 +12,7 @@
     </router-view>
     <app-button />
     <app-sidebar />
+    <app-dock />
   </div>
 </template>
 <script lang="ts">
@@ -20,11 +21,13 @@ import { useRoute } from 'vue-router'
 import { useDark } from '/@/hooks/app/useDark'
 import AppButton from './components/AppButton.vue'
 import AppSidebar from './components/AppSidebar.vue'
+import AppDock from './components/Dock.vue'
 export default defineComponent({
   name: 'Container',
   components: {
     AppButton,
     AppSidebar,
+    AppDock,
   },
   setup() {
     const route = useRoute()

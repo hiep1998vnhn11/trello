@@ -9,15 +9,18 @@
       <div class="arrow-left"></div>
       <div class="arrow-right"></div>
     </div>
+    <Button />
   </div>
 </template>
 <script lang="ts">
 import { onMounted, ref, defineComponent } from 'vue'
 import { ToggleDarkMode } from '/@/components/Advance'
+import Button from '/@/components/Test/Button'
 export default defineComponent({
   name: 'Index',
   components: {
     ToggleDarkMode,
+    Button,
   },
   setup() {
     onMounted(() => {})

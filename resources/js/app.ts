@@ -4,11 +4,13 @@ import { createApp } from 'vue'
 import { setupStore } from './store'
 import { setupPlugin } from './plugins'
 import createI18n from './locales'
+import { installGlobalComponent } from '/@/components/installGlobalComponent'
 import './assets/scss/app.scss'
 import './index.css'
 
 async function bootstrap() {
   const app = createApp(App)
+  installGlobalComponent(app)
   app.config.compilerOptions.isCustomElement = (tag: string) =>
     tag === 'ion-icon'
 

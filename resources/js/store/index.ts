@@ -8,7 +8,7 @@ import user from './modules/user'
 // import errorLog from "./modules/errorLog";
 // import locale from "./modules/locale";
 // import lock from "./modules/lock";
-// import multipleTab from "./modules/multipleTab";
+import multiApp from './modules/multiApp'
 // import permission from "./modules/permission";
 import mp3 from './modules/mp3'
 
@@ -19,6 +19,7 @@ const store = createStore<any>({
   modules: {
     mp3,
     user,
+    multiApp,
   },
 })
 

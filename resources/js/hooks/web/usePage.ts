@@ -4,7 +4,9 @@ import { isString } from '/@/utils/is'
 import { unref } from 'vue'
 import { useRouter } from 'vue-router'
 
-export type RouteLocationRawEx = Omit<RouteLocationRaw, 'path'> & { path: PageEnum }
+export type RouteLocationRawEx = Omit<RouteLocationRaw, 'path'> & {
+  path: PageEnum
+}
 
 function handleError(e: Error) {
   console.error(e)
@@ -17,7 +19,10 @@ export function useGo(_router?: Router) {
     router = useRouter()
   }
   const { push, replace } = _router || router
-  function go(opt: PageEnum | RouteLocationRawEx | string = PageEnum.BASE_HOME, isReplace = false) {
+  function go(
+    opt: PageEnum | RouteLocationRawEx | string = PageEnum.BASE_HOME,
+    isReplace = false
+  ) {
     if (!opt) {
       return
     }

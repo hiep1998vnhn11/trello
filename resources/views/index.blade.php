@@ -14,24 +14,25 @@
     <script src="/_app.config.js"></script>
     <script type="module" crossorigin src="{{ config('app.url') . '/' . $manifest['resources/js/app.ts']['file'] }}">
     </script>
+
     @else
     {{-- Development --}}
     <script type="module" src="http://localhost:{{env('VITE_PORT')}}/@vite/client"></script>
     <script type="module" src="http://localhost:{{env('VITE_PORT')}}/resources/js/app.ts"></script>
     @endenv
+    <script type="module">
+        (()=>{
+            // var app = document.getElementById('app');
+            // app.addEventListener('contextmenu', function(e) {
+            //     e.preventDefault();
+            // })
+            var darkMode = window.localStorage.getItem('DARK_MODE')
+            if(!darkMode || darkMode != 'true') document.body.classList.add('light-mode')
+        })()
+    </script>
 </head>
 
 <body>
-    <script>
-        (() => {
-      var htmlRoot = document.getElementById('htmlRoot');
-      var theme = window.localStorage.getItem('__APP__DARK__MODE__');
-      if (htmlRoot && theme) {
-        htmlRoot.setAttribute('data-theme', theme);
-        theme = htmlRoot = null;
-      }
-    })();
-    </script>
     <div id="app">
         <style>
             .spinner-container {

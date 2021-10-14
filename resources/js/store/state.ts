@@ -6,5 +6,5 @@ export type AppState = {
 export default {
   darkMode: localStorage.getItem('DARK_MODE') === 'true',
   appButton: false,
-  sidebar: true,
+  sidebar: false,
 } as AppState

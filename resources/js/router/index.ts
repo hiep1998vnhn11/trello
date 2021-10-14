@@ -6,14 +6,10 @@ import discordRoute from './routes/discord'
 import trelloRoute from './routes/trello'
 import mp3Route from './routes/mp3'
 import socialRoute from './routes/social'
+import appRoute from './routes/app'
 import { createRouteGuard } from './guards'
 const routes: RouteRecordRaw[] = [
-  { path: '/', name: 'Index', component: () => import('/@/pages/index.vue') },
-  {
-    path: '/test',
-    name: 'Test',
-    component: () => import('/@/pages/test.vue'),
-  },
+  ...appRoute,
   ...authRoutes,
   ...discordRoute,
   ...trelloRoute,
